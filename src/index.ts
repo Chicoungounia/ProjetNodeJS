@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoutes from "./routes/authRoutes";
 import cookieParser from "cookie-parser";
+import clientRoutes from "./routes/clientRoutes";
 
 //Création d'un serveur Express
 const app = express();
@@ -34,6 +35,8 @@ connectDB();
 
 //Ajouter ici les routes
 app.use('/auth', authRoutes);
+app.use('/api', clientRoutes);
+
 
 
 //app.listen indique au serveur d'écouter les requêtes HTTP arrivant sur le
