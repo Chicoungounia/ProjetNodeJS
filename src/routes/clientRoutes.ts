@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyTokenMiddleware } from '../middlewares/verifyTokenMiddleware';
-import { createClient, getClientInactif, modifClient, modifClientStatus } from '../controllers/ClientController';
 import { isAdmin } from '../middlewares/verifyRole';
+import { createClient, getClientInactif, modifClient, modifClientStatus } from '../controllers/ClientController';
 
 const router = express.Router();
 

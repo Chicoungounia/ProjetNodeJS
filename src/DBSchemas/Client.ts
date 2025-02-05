@@ -4,7 +4,7 @@ export interface IClient extends Document {
     name: string;
     adresse: string
     email: string;
-    telephone : number;
+    telephone : string;
     historiqueAchat : string[];
     status: 'actif' | 'inactif'; // Utilisation de l'enum
     
@@ -16,7 +16,7 @@ const ClientSchema: Schema = new Schema({
     name: { type: String, required: true, unique: true },
     adresse: { type: String, required: true },
     email: { type: String },
-    telephone: { type: Number },
+    telephone: { type: String },
     historiqueAchat: { type: [String], default: [] },
     status: { type: String, enum: ['actif', 'inactif'], default: 'actif' }});
 

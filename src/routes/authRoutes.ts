@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, login, register } from "../controllers/authControllers";
+import { deleteUser, login, register } from "../controllers/authController";
 import { isAdmin } from "../middlewares/verifyRole";
 
 const router = Router();

@@ -6,7 +6,7 @@ import { JwtPayload } from 'jsonwebtoken';
 
 export async function register(req:Request, res:Response){
     try{
-    const {name, password, role ,isActive} = req.body;
+    const {name, password,isActive} = req.body;
     if(!name || !password){
         res.status(400).send('Champs manquant: name et/ou password');
         return 
@@ -15,7 +15,7 @@ export async function register(req:Request, res:Response){
     const hashedPassword= await hashPassword(password);
 
     //creer nouvel utilisateur
-    const newUser:IUser= new UserSchema({name, hashedPassword, role, isActive});
+    const newUser:IUser= new UserSchema({name, hashedPassword, isActive});
     //on sauvegarde
     const savedUser= await newUser.save();
 
