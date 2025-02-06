@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes";
 import cookieParser from "cookie-parser";
 import clientRoutes from "./routes/clientRoutes";
 import productRoutes from "./routes/productRoutes";
+import commandeRoutes from "./routes/commandeRoutes";
 
 //Création d'un serveur Express
 const app = express();
@@ -38,6 +39,7 @@ connectDB();
 app.use('/auth', authRoutes);
 app.use('/api', clientRoutes);
 app.use('/api', productRoutes);
+app.use('/commande', commandeRoutes);
 
 
 

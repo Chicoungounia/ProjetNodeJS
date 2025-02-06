@@ -17,5 +17,4 @@ export function isAdmin(req: Request, res: Response, next: NextFunction) {
     }
 
     // Si le rôle est admin, passer à la route suivante
-    next();
-}
+    next();}
