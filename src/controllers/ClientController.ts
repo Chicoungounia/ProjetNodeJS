@@ -76,7 +76,7 @@ export async function modifClientStatus(req: Request, res: Response) {
         return 
         }
 
-        // Ne pas permettre la modification du champ "status"
+        // modification du champ "status"
         const updatedClientData = {
             status
         };
