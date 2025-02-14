@@ -167,3 +167,57 @@ export async function modifyCommandeStatuts(req: Request, res: Response) {
     res.status(500).json({ message: err.message || 'Erreur lors de la modification du statut' });
   }
 }
+
+export async function cancelCommande(req: Request, res: Response) {
+  const { commandeId } = req.params;
+  
+
+  try {
+    // Trouver la commande à supprimer
+    const commande = await Commande.findById(commandeId);
+    if (!commande) {
+     res.status(404).json({ message: 'Commande non trouvée' });
+     return 
+    }
+
+    // Mettre à jour les stocks des produits
+    const produits = commande.produit;
+    const quantités = commande.quantité;
+
+    await Promise.all(
+      produits.map(async (nomProduit: string, index: number) => {
+        const product = await Product.findOne({ name: nomProduit });
+        if (!product) {
+          throw new Error(`Produit non trouvé : ${nomProduit}`);
+        }
+
+        // Ajouter la quantité de retour au stock
+        product.stock += quantités[index];
+        await product.save();
+      })
+    );
+
+    // Supprimer la commande du tableau historiqueAchat du client
+    const client = await Client.findById(commande.clientId);
+    if (!client) {
+     res.status(404).json({ message: 'Client non trouvé' });
+     return 
+    }
+
+    // Retirer l'ID de la commande du tableau historiqueAchat
+    client.historiqueAchat = client.historiqueAchat.filter(
+      (id: string) => id.toString() !== commandeId
+    );
+    await client.save();
+
+    // Supprimer la commande
+    await Commande.findByIdAndDelete(commandeId);
+
+    // Répondre avec un message de succès
+    res.status(200).json({ message: 'Commande supprimée avec succès' });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ message: err.message || 'Erreur lors de la suppression de la commande' });
+  }
+}
+

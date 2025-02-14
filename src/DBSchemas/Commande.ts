@@ -6,9 +6,9 @@ export interface ICommande extends Document {
     quantité: number[];
     prixUnitaire: number[];
     total: number;
-    statuts : 'en attente' | 'expédier' | 'livrer';
     dateCreation: Date;
     dateModifStatuts : Date;  
+    statuts: 'en attente' | 'expédiée' | 'livrée' | 'annulée';
     
 }
 
@@ -19,10 +19,10 @@ const CommandeSchema: Schema = new Schema({
     quantité: { type: [Number], required: true },
     prixUnitaire : { type: [Number], required: true },
     total: { type: Number, required: true },
-    statuts: { type: String, enum: ['en attente', 'expedier', 'livrer'], default: 'en attente' },
     dateCreation: { type: Date, default: Date.now },
-    dateModifStatuts: { type: Date, default: Date.now }})
-    
+    dateModifStatuts: { type: Date, default: Date.now },
+    statuts: { type: String, enum: ['en attente', 'expédiée', 'livrée', 'annulée'], default: 'en attente' }
+});    
 
 // Exporter le modèle
 export default mongoose.model<ICommande>('Commande', CommandeSchema);

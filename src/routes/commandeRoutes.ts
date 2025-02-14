@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { createCommande, modifyCommande, modifyCommandeStatuts } from "../controllers/commandeController";
+import { cancelCommande, createCommande, modifyCommande, modifyCommandeStatuts } from "../controllers/commandeController";
+import { verifyTokenMiddleware } from "../middlewares/verifyTokenMiddleware";
 
 const router = Router();
 
-router.post('/create', createCommande);
-router.put('/modifier/:commandeId', modifyCommande)
-router.put('/modifier/statuts/:commandeId', modifyCommandeStatuts)
+router.post('/create', verifyTokenMiddleware, createCommande);
+router.put('/modifier/:commandeId',verifyTokenMiddleware, modifyCommande)
+router.put('/modifier/statuts/:commandeId',verifyTokenMiddleware, modifyCommandeStatuts)
+router.put('/cancel/:commandeId',verifyTokenMiddleware, cancelCommande)
 
 export default router;
